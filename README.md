@@ -110,16 +110,33 @@ curl -s -X POST http://localhost:8080/api/v1/students \
 }
 ```
 
+## Running with Docker
+
+**Build the image**
+```bash
+make docker-build
+```
+
+**Run the container**
+```bash
+make up
+make docker-run
+```
+
+The container connects to Postgres via the Docker Compose network. `DB_HOST` is overridden to `postgres` (the compose service name) at runtime.
+
 ## Available Make Commands
 
-| Command        | Description                  |
-|----------------|------------------------------|
-| make up        | Start Docker containers      |
-| make down      | Stop Docker containers       |
-| make run       | Run the API server           |
-| make build     | Build the binary             |
-| make test      | Run unit tests               |
-| make migrate   | Run DB migrations            |
+| Command           | Description                        |
+|-------------------|------------------------------------|
+| make up           | Start Docker containers            |
+| make down         | Stop Docker containers             |
+| make run          | Run the API server locally         |
+| make build        | Build the binary                   |
+| make test         | Run unit tests                     |
+| make migrate      | Run DB migrations                  |
+| make docker-build | Build the Docker image             |
+| make docker-run   | Run the API in a Docker container  |
 
 ## Testing
 
