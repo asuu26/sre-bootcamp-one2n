@@ -32,10 +32,10 @@ A CRUD REST API for managing student records, built with Go and Gin.
 
 ## Prerequisites
 
-- Go 1.26+
 - Docker + Docker Compose
+- GNU Make
 
-## Local Setup
+## One-Click Local Setup
 
 **1. Clone the repo**
 ```bash
@@ -48,22 +48,33 @@ cd sre-bootcamp-one2n
 cp .env.example .env
 ```
 
-**3. Start Postgres**
+**3. Start everything**
 ```bash
-make up
+make start
 ```
 
-**4. Run migrations**
-```bash
-make migrate
-```
-
-**5. Start the server**
-```bash
-make run
-```
+That's it. `make start` will:
+1. Build the Docker image
+2. Start Postgres and wait until healthy
+3. Run DB migrations
+4. Start the API container
 
 Server runs at `http://localhost:8080`.
+
+**Stop all services**
+```bash
+make down
+```
+
+## Local Development (without Docker)
+
+Requires Go 1.26+ installed locally.
+
+```bash
+make up       # start Postgres
+make migrate  # run migrations
+make run      # run API locally
+```
 
 ## Environment Variables
 
@@ -137,6 +148,8 @@ The container connects to Postgres via the Docker Compose network. `DB_HOST` is 
 | make migrate      | Run DB migrations                  |
 | make docker-build | Build the Docker image             |
 | make docker-run   | Run the API in a Docker container  |
+| make start        | One-click: build, migrate, run all |
+| make stop         | Stop all containers                |
 
 ## Testing
 
