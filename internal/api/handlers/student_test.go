@@ -32,7 +32,7 @@ func TestCreate(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer db.Close()
+	defer func() { _ = db.Close() }()
 
 	now := time.Now()
 	rows := sqlmock.NewRows([]string{"id", "name", "email", "age", "created_at", "updated_at"}).
@@ -66,7 +66,7 @@ func TestCreate_ValidationError(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer db.Close()
+	defer func() { _ = db.Close() }()
 
 	h := NewStudentHandler(db, zap.NewNop())
 	r := setupRouter(h)
@@ -90,7 +90,7 @@ func TestGetAll(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer db.Close()
+	defer func() { _ = db.Close() }()
 
 	now := time.Now()
 	rows := sqlmock.NewRows([]string{"id", "name", "email", "age", "created_at", "updated_at"}).
@@ -117,7 +117,7 @@ func TestGetByID(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer db.Close()
+	defer func() { _ = db.Close() }()
 
 	now := time.Now()
 	rows := sqlmock.NewRows([]string{"id", "name", "email", "age", "created_at", "updated_at"}).
@@ -144,7 +144,7 @@ func TestGetByID_NotFound(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer db.Close()
+	defer func() { _ = db.Close() }()
 
 	mock.ExpectQuery(`SELECT id, name, email, age, created_at, updated_at FROM students WHERE id`).
 		WithArgs(99).
@@ -167,7 +167,7 @@ func TestUpdate(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer db.Close()
+	defer func() { _ = db.Close() }()
 
 	now := time.Now()
 	rows := sqlmock.NewRows([]string{"id", "name", "email", "age", "created_at", "updated_at"}).
@@ -201,7 +201,7 @@ func TestDelete(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer db.Close()
+	defer func() { _ = db.Close() }()
 
 	mock.ExpectExec(`DELETE FROM students`).
 		WithArgs(1).

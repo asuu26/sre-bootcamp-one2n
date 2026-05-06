@@ -54,7 +54,7 @@ func (h *StudentHandler) GetAll(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	defer rows.Close()
+	defer func() { _ = rows.Close() }()
 
 	students := []models.Student{}
 	for rows.Next() {

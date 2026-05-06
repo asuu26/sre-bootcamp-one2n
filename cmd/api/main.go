@@ -13,7 +13,7 @@ import (
 
 func main() {
 	log := logger.New()
-	defer log.Sync()
+	defer func() { _ = log.Sync() }()
 
 	if err := godotenv.Load(); err != nil {
 		log.Warn("no .env file found, reading from environment")
@@ -28,7 +28,7 @@ func main() {
 	if err != nil {
 		log.Fatal("failed to connect to database", zap.Error(err))
 	}
-	defer conn.Close()
+	defer func() { _ = conn.Close() }()
 
 	if err := conn.Ping(); err != nil {
 		log.Fatal("database unreachable", zap.Error(err))
@@ -40,7 +40,9 @@ func main() {
 	r := gin.New()
 	r.Use(logger.GinLogger(log))
 	r.Use(gin.Recovery())
-	r.SetTrustedProxies([]string{"127.0.0.1"})
+	if err := r.SetTrustedProxies([]string{"127.0.0.1"}); err != nil {
+		log.Fatal("failed to set trusted proxies", zap.Error(err))
+	}
 
 	r.GET("/healthcheck", func(c *gin.Context) {
 		c.JSON(200, gin.H{"status": "ok"})

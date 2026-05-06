@@ -1,4 +1,4 @@
-.PHONY: run build test migrate up down docker-build docker-run start stop
+.PHONY: run build test lint migrate up down docker-build docker-run start stop
 
 IMAGE_NAME=sre-bootcamp-one2n
 IMAGE_TAG=0.1.0
@@ -20,6 +20,9 @@ build:
 
 test:
 	go test ./...
+
+lint:
+	golangci-lint run ./...
 
 docker-build:
 	docker build -t $(IMAGE_NAME):$(IMAGE_TAG) .
