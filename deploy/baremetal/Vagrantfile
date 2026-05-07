@@ -1,0 +1,15 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "utm/debian11"
+  config.vm.hostname = "sre-bootcamp"
+
+  config.vm.network "forwarded_port", guest: 8080, host: 8888
+
+  config.vm.provider "utm" do |u|
+    u.name = "sre-bootcamp"
+    u.memory = "2048"
+    u.cpus = 2
+    u.directory_share_mode = "virtFS"
+  end
+
+  config.vm.provision "shell", path: "provision.sh"
+end

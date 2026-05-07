@@ -1,7 +1,7 @@
 .PHONY: run build test lint migrate up down docker-build docker-run start stop
 
 IMAGE_NAME=sre-bootcamp-one2n
-IMAGE_TAG=0.1.0
+IMAGE_TAG=$(shell cat VERSION)
 
 up:
 	docker compose up -d postgres

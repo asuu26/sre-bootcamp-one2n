@@ -1,0 +1,1 @@
+{"dependencies":[["vagrant-orbstack",["= 0.1.0"]],["vagrant_utm",["= 0.1.5"]]],"checksum":"c1300ca293adf18cc75672bdad0354dbcb6376173507369976cd5eae013116a5","vagrant_version":"2.4.9"}
