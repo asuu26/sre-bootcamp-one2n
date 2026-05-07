@@ -1,0 +1,15 @@
+fullnameOverride: postgres
+
+auth:
+  username: pguser
+  password: pgpass
+  database: sre_bootcamp
+
+volumePermissions:
+  enabled: true
+
+primary:
+  nodeSelector:
+    type: database
+  persistence:
+    size: 1Gi
